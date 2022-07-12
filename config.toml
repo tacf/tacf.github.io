@@ -1,4 +1,4 @@
-baseURL = "https://tiagoacf.com"
+baseURL = "https://tiagoacf.com/"
 languageCode = "en-us"
 title = "tiagoacf"
 theme="archie"
