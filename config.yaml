@@ -128,7 +128,7 @@ menu:
       url: /tags/
       weight: 20
     - identifier: tiagoacf
-      name: tiagoacf.org
+      name: tiagoacf.com
       url: https://tiagoacf.com
       weight: 30
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
