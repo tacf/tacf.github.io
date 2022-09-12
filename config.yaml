@@ -129,7 +129,7 @@ menu:
       weight: 20
     - identifier: tiagoacf
       name: tiagoacf.org
-      url: https://tiagoacf.org
+      url: https://tiagoacf.com
       weight: 30
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
@@ -139,4 +139,4 @@ markup:
     # anchorLineNos: true
     # codeFences: true
     # guessSyntax: true
-    # lineNos: true
+    lineNos: true
