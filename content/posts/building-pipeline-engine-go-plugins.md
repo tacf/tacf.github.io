@@ -6,9 +6,13 @@ ShowToc: true
 ShowBreadCrumbs: true
 ---
 
+CI/CD tools are at the core of every companys software delivery pipeline. This tools are even the very product that some companies develop and sell. But... are we able to build our own custom CI/CD tools? Do we possess the required skills to build our own pipeline engine?
+
+## Building a Pipeline Engine
+
 If you’ve worked with any CI/CD platform, you’re no stranger to yaml defined pipelines. Every platform, nowadays, implements their own Yaml structure, allowing operational and development teams to design their pipelines to their hearts content.
 
-At the core of these CI/CD platforms lies an engine, capable of picking up the *****Yaml Definitions***** that engineers throw their way and execute the defined instructions. 
+At the core of these CI/CD platforms lies an engine, capable of picking up the **Yaml Definitions** that engineers throw their way and execute the defined instructions. 
 
 These platforms have evolve in such a way, that they allow high levels of customisation, not limited but including the use of custom tasks. These tasks can be viewed as an equivalent to a function or method, in the sense that, they can be called by it’s name and provided with a list of parameters/arguments
 
@@ -27,11 +31,11 @@ jobs:
       - run: echo "Hello World"
 ```
 
-The above pipeline definition defines two tasks (seen in the `steps` section). These two tasks are a good example of a ***custom*** and a **native** one (we’ll talk about what *native* means in a second).
+The above pipeline definition defines two tasks (seen in the `steps` section). These two tasks are a good example of a **custom** and a **native** one (we’ll talk about what **native** means in a second).
 
 The first task is an example of a **custom** task, it specifies that the task is named `actions/checkout@v3`. This **custom** task in particular does not require any arguments.
 
-On the other hand, the task defined by the keyword `run` is a ***native*** task. These tasks are usual characterised by being invoked using keywords that are part of the ***Yaml Definition*** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **Yaml specification.**
+On the other hand, the task defined by the keyword `run` is a **native** task. These tasks are usual characterised by being invoked using keywords that are part of the **Yaml Definition** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **Yaml specification**.
 
 Custom tasks like `actions/checkout@v3` are provided by either the platform developer or by the community. By design, these are typically built around respecting some contract/interface. This allows the engine of these execution platforms, among other things, to load tasks at run time. Thus giving a huge flexibility and extensibility in terms of development for these platforms.
 
@@ -39,17 +43,17 @@ Looking at Golang, which nowadays is being highly preferred, by projects and tea
 
 > Can we build a system/platform like this using Golang and its Plugin library?
 
-Short answer is *yes* !!
+Short answer is **yes** !!
 
 This article will guide you through the process on building a pipeline engine that is mainly built around [Go Plugin library](https://pkg.go.dev/plugin). 
 
 ## Our Building Blocks
 
-Well start our guided journey by looking at the base concepts and building blocks that we’ll be using to create our ***tiny pipeline engine*** 🙂
+Well start our guided journey by looking at the base concepts and building blocks that we’ll be using to create our **tiny pipeline engine** 🙂
 
 ### Yaml Definition
 
-As mentioned, the ***Yaml Definition*** is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
+As mentioned, the **Yaml Definition** is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
 
 Similarly to the example definition of Github Actions previously presented, we’ll have a list of `steps`. Each step will consist in a `task` keyword which represents the function to be called (similar to the `uses` keyword from the previous example) and a `parameters` keyword which will be a map of parameters and their respective values that will be used by the function.
 
@@ -107,7 +111,7 @@ With this type interface we’re defining that our plugins will have at least a 
 
 ### Plugin Implementation
 
-The goal of our Plugin library will be to generate **Executable Tasks.** For this we’ll need the Plugin code to implement some properties and allow us to request the creation of the ***Task*** object. 
+The goal of our Plugin library will be to generate **Executable Tasks.** For this we’ll need the Plugin code to implement some properties and allow us to request the creation of the **Task** object. 
 
 Lets take a look 👀
 
@@ -127,7 +131,7 @@ func NewInstance(parameters map[string]string) interface{} { ... }
 
 We start by defining a variable `Name`. This variable will be useful to search and index loaded plugins in the engine, in order to be able to instantiate **Tasks** based on that plugin.
 
-The `type task struct {...}` represents the ***Task*** objects that will be instantiated and will keep any state we desire related to the execution of the task.
+The `type task struct {...}` represents the **Task** objects that will be instantiated and will keep any state we desire related to the execution of the task.
 
 The `NewInstance(...)` function, will allow us to request a new instance of a task (the actual executable plugin code) from the Plugin.
 
@@ -167,7 +171,7 @@ What we’re doing here is basically iterating over the plugin paths identified 
 
 ### Task Instantiation
 
-Task instantiation consists in picking up the yaml definition and for every task instruction we find (task name and parameters), we’ll search for the requested plugin in our loaded plugins list and create an instance of an ***********Executable Task*********** for that task instruction.
+Task instantiation consists in picking up the yaml definition and for every task instruction we find (task name and parameters), we’ll search for the requested plugin in our loaded plugins list and create an instance of an **Executable Task** for that task instruction.
 
 ```go
 func instanciateTasks(pluginLibs PluginLibs, tasks pipelineYaml.TasksYaml) ExecutableTasks {
@@ -189,7 +193,7 @@ Previously we mentioned that we couldn’t immediately cast the type of the retu
 
 ### Task Execution
 
-After having been through all the steps. Loading the plugins and instantiating our ****************Executable Tasks**************** with the proper arguments, one could assume that executing tasks should be pretty straight forward. And those assumptions would be spot on 🙂
+After having been through all the steps. Loading the plugins and instantiating our **Executable Tasks** with the proper arguments, one could assume that executing tasks should be pretty straight forward. And those assumptions would be spot on 🙂
 
 ```go
 func executeTasks(executableTasks ExecutableTasks) {
