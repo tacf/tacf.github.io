@@ -6,7 +6,7 @@ ShowToc: true
 ShowBreadCrumbs: true
 ---
 
-CI/CD tools are at the core of every companys software delivery pipeline. This tools are even the very product that some companies develop and sell. But... are we able to build our own custom CI/CD tools? Do we possess the required skills to build our own pipeline engine?
+CI/CD tools are at the core of every company's software delivery pipeline. This tools are even the very product that some companies develop and sell. But... are we able to build our own custom CI/CD tools? Do we possess the required skills to build our own pipeline engine?
 
 ## Building a Pipeline Engine
 
