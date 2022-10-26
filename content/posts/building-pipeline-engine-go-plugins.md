@@ -19,12 +19,12 @@ name: Workflow Name
 run-name: Workflow Execution Name
 on: [push]
 jobs:
-	Linting:
-		runs-on: ubuntu-latest
-		steps:
-			- name: Check out repository code
-			  uses: actions/checkout@v3
-			- run: echo "Hello World"
+  Linting:
+    runs-on: ubuntu-latest
+      steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "Hello World"
 ```
 
 The above pipeline definition defines two tasks (seen in the `steps` section). These two tasks are a good example of a ***custom*** and a **native** one (we’ll talk about what *native* means in a second).
