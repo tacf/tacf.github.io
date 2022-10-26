@@ -22,7 +22,7 @@ jobs:
   Linting:
     runs-on: ubuntu-latest
     steps:
-			- name: Check out repository code
+	  - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo "Hello World"
 ```
@@ -45,11 +45,11 @@ This article will guide you through the process on building a pipeline engine th
 
 ## Our Building Blocks
 
-Well start our guided journey by looking at the base concepts and building blocks that we’ll be using to create our *********************tiny pipeline engine********************* 🙂
+Well start our guided journey by looking at the base concepts and building blocks that we’ll be using to create our ***tiny pipeline engine*** 🙂
 
 ### Yaml Definition
 
-As mentioned, the ***************Yaml Definition*************** is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
+As mentioned, the ***Yaml Definition***is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
 
 Similarly to the example definition of Github Actions previously presented, we’ll have a list of `steps`. Each step will consist in a `task` keyword which represents the function to be called (similar to the `uses` keyword from the previous example) and a `parameters` keyword which will be a map of parameters and their respective values that will be used by the function.
 
