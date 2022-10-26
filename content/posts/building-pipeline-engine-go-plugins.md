@@ -19,12 +19,12 @@ name: Workflow Name
 run-name: Workflow Execution Name
 on: [push]
 jobs:
-  Linting:
-    runs-on: ubuntu-latest
-    steps:
-	  - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "Hello World"
+	Linting:
+		runs-on: ubuntu-latest
+		steps:
+			- name: Check out repository code
+			  uses: actions/checkout@v3
+			- run: echo "Hello World"
 ```
 
 The above pipeline definition defines two tasks (seen in the `steps` section). These two tasks are a good example of a ***custom*** and a **native** one (we’ll talk about what *native* means in a second).
@@ -98,8 +98,8 @@ As we mentioned, plugins need to agree on a standard interface. With the goal of
 
 ```go
 type Plugin interface {
-        Exec()
-		GetName()
+	Exec()
+	GetName()
 }
 ```
 
@@ -172,12 +172,10 @@ Task instantiation consists in picking up the yaml definition and for every task
 ```go
 func instanciateTasks(pluginLibs PluginLibs, tasks pipelineYaml.TasksYaml) ExecutableTasks {
 	executableTasks := make(ExecutableTasks, len(tasks))
-	i := 0
-	for _, v := range tasks {
+	for i, v := range tasks {
 		pluginLib, _ := pluginLibs[strings.ToLower(v.Name)]
 
 		executableTasks[i] = pluginLib(v.Parameters).(Plugin)
-		i++
 	}
 	return executableTasks
 }
