@@ -1,7 +1,7 @@
 ---
 title: "Building a Pipeline Engine with Go Plugins"
 date: 2022-10-22T16:35:00+01:00
-draft:
+tags: ["golang","cicd","pipelines"]
 ShowToc: true
 ShowBreadCrumbs: true
 ---
