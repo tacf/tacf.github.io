@@ -31,16 +31,15 @@ The above pipeline definition defines two tasks (seen in the `setps` section). T
 
 The first task is an example of a ******custom****** task, it specifies that the task is named `actions/checkout@v3`. This ******custom****** task in particular does not require any arguments.
 
-On the other hand, the task defined by the keyword `run` is a *******native******* task. These tasks are usual characterised by being invoked using keywords that are part of the *****Yaml Definition***** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **************Yaml************** specification**************.**************
+On the other hand, the task defined by the keyword `run` is a *******native******* task. These tasks are usual characterised by being invoked using keywords that are part of the *****Yaml Definition***** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **Yaml specification.**
 
 Custom tasks like `actions/checkout@v3` are provided by either the platform developer or by the community. By design, these are typically built around respecting some contract/interface. This allows the engine of these execution platforms, among other things, to load tasks at run time. Thus giving a huge flexibility and extensibility in terms of development for these platforms.
 
 Looking at Golang, which nowadays is being highly preferred, by projects and teams working in or with Operational oriented platforms and tools, we can see that since version 1.8, it allows to dynamically load code using their library `Plugin`.  So now the question stands,
 
 > Can we build a system/platform like this using Golang and its Plugin library?
-> 
 
-Short answer is yes !!
+Short answer is *yes* !!
 
 This article will guide you through the process on building a pipeline engine that is mainly built around [Go Plugin library](https://pkg.go.dev/plugin). 
 
@@ -100,7 +99,7 @@ As we mentioned, plugins need to agree on a standard interface. With the goal of
 ```go
 type Plugin interface {
         Exec()
-				GetName()
+		GetName()
 }
 ```
 
@@ -126,9 +125,9 @@ func (task) GetName() string { ... }
 func NewInstance(parameters map[string]string) interface{} { ... }
 ```
 
-We start by defining a variable `Name`. This variable will be useful to search and index loaded plugins in the engine, in order to be able to instantiate ******Tasks****** based on that plugin******.******
+We start by defining a variable `Name`. This variable will be useful to search and index loaded plugins in the engine, in order to be able to instantiate **Tasks** based on that plugin.
 
-The `type task struct {...}` represents the *****Task***** objects that will be instantiated and will keep any state we desire related to the execution of the task.
+The `type task struct {...}` represents the ***Task*** objects that will be instantiated and will keep any state we desire related to the execution of the task.
 
 The `NewInstance(...)` function, will allow us to request a new instance of a task (the actual executable plugin code) from the Plugin.
 
