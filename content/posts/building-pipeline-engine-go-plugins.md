@@ -27,11 +27,11 @@ jobs:
       - run: echo "Hello World"
 ```
 
-The above pipeline definition defines two tasks (seen in the `setps` section). These two tasks are a good example of a ***custom*** and a ******native****** one (we’ll talk about what *native* means in a second).
+The above pipeline definition defines two tasks (seen in the `steps` section). These two tasks are a good example of a ***custom*** and a **native** one (we’ll talk about what *native* means in a second).
 
-The first task is an example of a ******custom****** task, it specifies that the task is named `actions/checkout@v3`. This ******custom****** task in particular does not require any arguments.
+The first task is an example of a **custom** task, it specifies that the task is named `actions/checkout@v3`. This **custom** task in particular does not require any arguments.
 
-On the other hand, the task defined by the keyword `run` is a *******native******* task. These tasks are usual characterised by being invoked using keywords that are part of the *****Yaml Definition***** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **Yaml specification.**
+On the other hand, the task defined by the keyword `run` is a ***native*** task. These tasks are usual characterised by being invoked using keywords that are part of the ***Yaml Definition*** specification. As you can see no keyword that allows us to select a method or function to call but a `run` keyword that is part of the **Yaml specification.**
 
 Custom tasks like `actions/checkout@v3` are provided by either the platform developer or by the community. By design, these are typically built around respecting some contract/interface. This allows the engine of these execution platforms, among other things, to load tasks at run time. Thus giving a huge flexibility and extensibility in terms of development for these platforms.
 
@@ -49,7 +49,7 @@ Well start our guided journey by looking at the base concepts and building block
 
 ### Yaml Definition
 
-As mentioned, the ***Yaml Definition***is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
+As mentioned, the ***Yaml Definition*** is the basis of the interaction between engineers and the execution engine. Lets start by defining our yaml specification for our pipelines.
 
 Similarly to the example definition of Github Actions previously presented, we’ll have a list of `steps`. Each step will consist in a `task` keyword which represents the function to be called (similar to the `uses` keyword from the previous example) and a `parameters` keyword which will be a map of parameters and their respective values that will be used by the function.
 
@@ -107,7 +107,7 @@ With this type interface we’re defining that our plugins will have at least a 
 
 ### Plugin Implementation
 
-The goal of our Plugin librarie will be to generate ****************Executable Tasks.**************** For this we’ll need the Plugin code to implement some properties and allow us to request the creation of the ***Task*** object. 
+The goal of our Plugin library will be to generate **Executable Tasks.** For this we’ll need the Plugin code to implement some properties and allow us to request the creation of the ***Task*** object. 
 
 Lets take a look 👀
 
