@@ -79,7 +79,7 @@ params:
   # home-info mode
   homeInfoParams:
     Title: "Hi fellow Engineer \U0001F44B"
-    Content: Welcome to my blog, were rants, ramblings and remarks all come together !!
+    Content: Welcome to my blog, where rants, ramblings and remarks all come together !!
 
   socialIcons:
     - name: twitter
