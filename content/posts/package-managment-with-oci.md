@@ -91,7 +91,7 @@ podman push --tls-verify=false localhost:5000/hello-world:my-version
 
 You should see the image being pushed successfully and you can now find it in our local *Zot* instance.
 
-![[hello-world-zot.png]]
+![hello-world image in zot ui](images/package-management-oci/hello-world-zot.png)
 
 Now comes the fun part. Lets inspect the image manifest using the *OCI Spec* APIs. In this case we will query the endpoint `/v2/<name>/manifests/<reference>`
 
