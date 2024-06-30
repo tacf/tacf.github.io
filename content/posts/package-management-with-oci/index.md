@@ -6,7 +6,7 @@ ShowToc: true
 ShowBreadCrumbs: true
 ---
 
-As a Software Engineer, you're undoubtedly familiar with package management tools like npm, Maven, RubyGems, pip, NuGet, Cargo and many more. Additionally, if you're a Support/Operations Engineer (DevOps, SRE, Platform, etc.), you've likely worked extensively with these tools and possibly maintained private servers for them.m.
+As a Software Engineer, you're undoubtedly familiar with package management tools like npm, Maven, RubyGems, pip, NuGet, Cargo and many more. Additionally, if you're a Support/Operations Engineer (DevOps, SRE, Platform, etc.), you've likely worked extensively with these tools and possibly maintained private servers for them.
 
 With the rise of containerization technologies, and several tools emerging in this area, the community felt the need for standards regarding creating, running and distributing containers.
 
@@ -18,16 +18,16 @@ Docker was initially released about 11 years ago and is often credited as the pr
 
 Docker quickly became the most frictionless way of running non-OS-level virtualization. While Docker didn't invent containers, it significantly advanced their development. Containerization began with simple tools like `chroot`, `jail`, and `cgroups`, which were later combined into LXC, creating a powerful virtualization tool that initiated a new way of running software.
 
-Half way through this revolution (around 2015), Docker and several other companies started working on standards for all of these underlying paradigms. From the way we package container, to the way we run them. The Open Container Initiative was formed and from it the OCI Specifications were born.
+Halfway through this revolution (around 2015), Docker and several other companies started working on standards for all of these underlying paradigms. From the way we package containers to the way we run them. The Open Container Initiative was formed and from it the *OCI Specifications* were born.
 
 For a deeper dive into this topic, refer to the referenced articles.
 
 # Open Container Initiative (OCI)
 
-As the story tells us, OCI was born from the need of standards for container technologies. This meant that instead of having a "single" highly opinionated tool to create and run containers there was now a standard that other project could follow, to implement they're own container tools, and still allow interoperability and reusability to the users of such tools. One example is `runc`, which replaced `libcontainer` as the container runtime for `docker` (later wrapped around in `containerd` w which from v1.22 and on, is the default container engine for Kubernetes). `runc` was launch at the same time as the OCI and was already built around the idea of creating a standard for container runtime.
+As the story tells us, OCI was born from the need for standards for container technologies. This meant that instead of having a "single" highly opinionated tool to create and run containers there was now a standard that other projects could follow, to implement they're own container tools, and still allow interoperability and reusability to the users of such tools. One example is `runc`, which replaced `libcontainer` as the container runtime for `docker` (later wrapped around in `containerd` which, from v1.22 and on, is the default container engine for Kubernetes). `runc` was launch at the same time as the OCI and was already built around the idea of creating a standard for container runtimes.
 # What does OCI Spec has to do with Package Management?
 
-Containers, like any other software, need to be distributed. OCI, aiming for standards in creation and runtime, also developed a standard for packaging and distributing container _images_, known as the _OCI Image Format Spec_. Initially focused on container images, this specification led to the development of a broader one: the _OCI Distribution Spec_. This broader spec uses the lessons and techniques developed for container images to facilitate generic content packaging and distribution.
+Containers, like any other software, need to be distributed. *OCI*, aiming for standards in creation and runtime, also developed a standard for packaging and distributing container *images*, known as the *OCI Image Format Spec*. Initially focused on container images, this specification led to the development of a broader one: the *OCI Distribution Spec*. This broader spec uses the lessons and techniques developed for container images to facilitate generic content packaging and distribution.
 
 In short, both *OCI Image Format Spec* and *OCI Distribution Spec* define a standard for a package manager that has a set of useful and interesting features like 
 - Custom metadata
@@ -36,15 +36,14 @@ In short, both *OCI Image Format Spec* and *OCI Distribution Spec* define a stan
 
 From here on out, we will refer just to *OCI Spec* whenever we want to talk about either the *Image Format* or the *Distribution* aspects of them. It should be clear to the reader, based on the context, which spec we are referring to.
 
-We are not implying that _OCI Spec_ compliant tools are the best package management tools available, or that their features are unique. The main point is that containers, are here to stay and are becoming (if not already) the most common way to package, distribute and run software, regardless of the underlying tech stack. This raises the question, "Why not package everything using these standards?". The answer, of course, is that it depends! 
+We are not implying that *OCI Spec* compliant tools are the best package management tools available, or that their features are unique. The main point is that containers, are here to stay and are becoming (if not already) the most common way to package, distribute and run software, regardless of the underlying tech stack. This raises the question, "Why not package everything using these standards?". The answer, of course, is that it depends! 
 The fact is, we can use the _OCI Spec_ to package any (terms and conditions may apply :D ) software. Our aim is to provide you with enough information to know: 1) that it is possible and 2) how to do it.
 
 Some of you may already be wondering, or perhaps frantically searching, "Surely a tool already exists for this," and you'd be right. That tool exists, and we'll touch on it later in this article. However, our goal is to equip you with enough knowledge to navigate this largely unexplored world of packaging and distributing generic content using the _OCI Spec_. I the last section we will briefly touch in using brew to install *OCI* compliant packages. This is a trivial example on why it is important to understand the basics of working with this specification.
 
 
-# Using OCI Spec (and its compliant tools) to manage your packages
-
 ## What does OCI Spec define?
+
 
 Among other thing, *OCI Spec* defines, workflows, backwards compatibilities, api etc. We will focus on the Api part of the spec as it is mostly with this Api definition we want the reader to be able to work with. Several other aspects will become clear as we provide examples.
 
@@ -56,13 +55,15 @@ The *OCI Spec* defines an API which is composed by the following first class cit
 - `tags`: Pointers to the manifests, typically associated with software versions. A manifest can have several tags.
 - `referrers`: References to other artifacts, providing a way to associate additional metadata or related content with a specific artifact.st
 
-## Environment Setup
+## *OCI* Package Management -- The Hard Way
 
-Unfortunately this where irony kicks in. Despite Docker being the parent of the *OCI Spec*, the `docker` cli and the [docker.io](docker.io) registry use and store images in the docker format, as such for the next steps we will use the `podman` tool that uses *OCI Spec* as it's default operating mode. 
+### Local Environment Setup
 
-Go to `podman` [oficial website](https://podman.io/) an follow the instructions to download and install in your operating system.
+Unfortunately this where irony kicks in. Despite Docker being the parent of the *OCI Spec*, the `docker` CLI and the [docker.io](docker.io) registry use and store images in the docker format, as such for the next steps we will use the `podman` tool that uses *OCI Spec* as it's default operating mode. 
 
-We're also assuming that you are currently using a Unix based OS. Although this should work with some changes in Windows.
+Go to the `podman` [oficial website](https://podman.io/) an follow the instructions to download and install in your operating system.
+
+We're also assuming that you are currently using a Unix-based OS. Although this should work with some changes in Windows.
 
 To experiment with this we recommend using Zot. To run `Zot` locally, for testing purposes, simply run
 
@@ -74,7 +75,7 @@ Now you should be able to access `Zot` landing page on you browser by accessing 
 
 We will use `curl` and `jq` in the next sections so make sure you have them installed.
 
-## `hello-world` container image *OCI Image Format*
+### Analyzing `hello-world` container image (*OCI Image Format*)
 
 Let's pull one of the smallest images we have and check it out
 
@@ -91,9 +92,9 @@ podman push --tls-verify=false localhost:5000/hello-world:my-version
 
 You should see the image being pushed successfully and you can now find it in our local *Zot* instance.
 
-![hello-world image in zot ui](images/package-management-oci/hello-world-zot.png)
+![hello-world image in zot ui](images/hello-world-zot.png)
 
-Now comes the fun part. Lets inspect the image manifest using the *OCI Spec* APIs. In this case we will query the endpoint `/v2/<name>/manifests/<reference>`
+Now comes the fun part. Let's inspect the image manifest using the *OCI Spec* APIs. In this case we will query the endpoint `/v2/<name>/manifests/<reference>`
 
 ```bash
 curl -X GET --silent localhost:5000/v2/hello-world/manifests/my-version | jq
@@ -128,18 +129,18 @@ You should see an output similar to the following one.
 }
 ```
 
-What we see here is,
-- *mediaTypes* specify the vendor, in this case *oci*; a name for the type; *manifest*, *config* and *layer* are some examples of type descriptions; and a *version* and file type indicator. (*mediaTypes* follow [rfc6838](https://datatracker.ietf.org/doc/html/rfc6838));
-- *config* section defines a *blob* that stores metadata. Tipically for container images this *blob* contains, among other thing, container port information;
-- *layers* is a list of *blobs*. These *blobs* are the actual layers of the container in this example.
-- *annotations* is additional metadata that you can store with information regarding your *OCI* artifact.
+What we see here is:
+- **mediaTypes** specify the vendor, in this case *oci*; a name for the type; *manifest*, *config* and *layer* are some examples of type descriptions; and a *version* and file type indicator. (*mediaTypes* follow [rfc6838](https://datatracker.ietf.org/doc/html/rfc6838));
+- **config** section defines a *blob* that stores metadata. Tipically for container images this *blob* contains, among other thing, container port information;
+- **layers** is a list of *blobs*. These *blobs* are the actual layers of the container in this example.
+- **annotations** is additional metadata that you can store with information regarding your *OCI* artifact.
 
 So, what is this all used for? 
 
 Clients like `docker` and `podman`, whenever you pull an images, first start by pulling its manifest, and based on it they are able to pull the container layers (only those that they do not currently have locally stored) and also have details on container ports, entrypoints, commands, etc (available in the config blob). 
 Notice that we have not mentioned the 
 
-## Storing any artifact using *OCI Distribution Spec*
+### Storing any artifact using *OCI Distribution Spec*
 
 So now that we've seen how the *OCI Spec* treats container images we should be ready to handle creating and obtaining our own artifacts using it.
 
@@ -195,13 +196,15 @@ curl -i -X PUT -H "Content-Type: application/vnd.oci.image.manifest.v1+json" loc
 **Note:** we have used `myversionortag` as the reference for the newly created package. This typically would be the version of your software.
 
 You can check your `zot` ui. It should look something like this.
-![[my-amazing-softward-uploaded.png]]
+![my amazing software artifact visible on zot ui](images/my-amazing-software-uploaded.png)
 
 And there you have it! You just successfully publish your package using *OCI Spec* ... the hard way 🙂
 
 ### Fetching an artifact using *OCI Distribution Spec*
 
-In regards to fetching the artifact back. Remember the process we did to push it?
+Now let's try and fetch back the artifact. 
+
+Remember the process we did to push it?
 
 1. Prepare the artifact
 2. Create the *blob* with the artifact
@@ -230,11 +233,11 @@ for DIGEST in $BLOBS; do
 done
 ```
 
-# Integrating/Using Existing tools
+## Integrating/Using Existing tools
 
 There are currently several tools that work with either *OCI Image Format* or the *OCI Distribution Spec*. We well present you one such tool that works with the latter.
 
-## ORAS
+### ORAS
 
 [ORAS](https://oras.land/) is a tool that does all the heavy lifting for your. For example if you want to replicate what we previously did using `oras` you would simply run the following command.
 ```bash
@@ -243,13 +246,13 @@ oras push localhost:5000/my-amazing-software:v1 my.amazing.software.tar.gz:appli
 
 In this case we used `v1` as reference. If we go back to the `zot` ui and open our artifact page we can see both the versions that we pushed.
 
-![[oras-pushed-version.png]]
+![artifact version pushed by oras visible in zot ui](images/oras-pushed-version.png)
 
-In the same fashion you could pull artifacts using `oras`.
+In the same fashion, you could pull artifacts using `oras`.
 ```bash
 oras pull localhost:5000/my-amazing-software:v1
 ```
-## *OCI* Artifacts as `brew` packages
+### *OCI* Artifacts as `brew` packages
 
 So, why should you bother knowing all of those steps to interact with the API if `oras` can simply do it for you? 
 Well, one really good use case would be to integrate *OCI* registries with the `brew` tool.
@@ -257,11 +260,11 @@ Well, one really good use case would be to integrate *OCI* registries with the `
 First of all -- How does `brew` work?
 
 `brew`, simplified, is a tool that allows you to define *formulas* on how to install software locally. Beyond what you would expect a formula to have, like a version, server location of the package, os specific rules, formulas also depend on a *strategy*.
-A *strategy* defines how you should fetch your package. This is where your newly acquired knowledge of how to handle *OCI Spec* comes in handy. With the whole process we went through you are now capable of designing a strategy that is able to leverage the *OCI* compliant APIs to pull your artifacts and allow your `brew` *formula* to work its magic on installing it.
+A *strategy* defines how you should fetch your package. This is where your newly acquired knowledge of how to handle *OCI Spec* comes in handy. You now possess the tools to be able to create a `brew` strategy that is able to leverage the *OCI* compliant APIs to install your software packages.
  
 
 
-# References
+## References
 - https://www.pluralsight.com/resources/blog/cloud/history-of-container-technology
 - https://erzeghi.medium.com/yet-another-brief-history-of-container-d-2962eac9679e
 - https://sestegra.medium.com/oci-registry-store-more-than-container-images-08ca1ac74a01
