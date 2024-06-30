@@ -235,7 +235,7 @@ done
 
 ## Integrating/Using Existing tools
 
-There are currently several tools that work with either *OCI Image Format* or the *OCI Distribution Spec*. We well present you one such tool that works with the latter.
+There are currently several tools that work with either *OCI Image Format* or the *OCI Distribution Spec*. We well present you one such tool that works with the latter, as well as show you some other use cases of the *OCI Distribution Spec*.
 
 ### ORAS
 
@@ -252,17 +252,53 @@ In the same fashion, you could pull artifacts using `oras`.
 ```bash
 oras pull localhost:5000/my-amazing-software:v1
 ```
+
+### Helm 
+
+Helm is yet another use case that recently (starting in version 3, and generally available in version v3.8.0) started using the *OCI Spec* to store it's artifacts. This brought several advantages, the main ones being, removing the need to manage the single file index for the chart repository servers and being able to store both containers and charts within the same platform.
+
+There is no need to go into much detail since by now we expect the reader to have a basic understanding of the *OCI Spec* so we will just leave you with an example of a manifest pulled from a *OCI* registries pertaining to a `helm` chart.
+
+
+```json
+{
+  "schemaVersion": 2,
+  "config": {
+    "mediaType": "application/vnd.cncf.helm.config.v1+json",
+    "digest": "sha256:8ec7c0f2f6860037c19b54c3cfbab48d9b4b21b485a93d87b64690fdb68c2111",
+    "size": 117
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.cncf.helm.chart.content.v1.tar+gzip",
+      "digest": "sha256:1b251d38cfe948dfc0a5745b7af5ca574ecb61e52aed10b19039db39af6e1617",
+      "size": 2487
+    },
+    {
+      "mediaType": "application/vnd.cncf.helm.chart.provenance.v1.prov",
+      "digest": "sha256:3e207b409db364b595ba862cdc12be96dcdad8e36c59a03b7b3b61c946a5741a",
+      "size": 643
+    }
+  ]
+}
+```
+
+This shows that the `helm` approach is pretty similar to the one we simulated previously.
+
+
 ### *OCI* Artifacts as `brew` packages
 
 So, why should you bother knowing all of those steps to interact with the API if `oras` can simply do it for you? 
 Well, one really good use case would be to integrate *OCI* registries with the `brew` tool.
 
-First of all -- How does `brew` work?
+`brew`, at it's core, is a package manager that works based on *formulas* you define, specifying where to fetch the software from and how to install it. In addition to base information like, version, artifact server, os specific rules, *formulas* also allow you to specify a *strategy*.
+A *strategy* defines how you should fetch your package from the artifact server. 
 
-`brew`, simplified, is a tool that allows you to define *formulas* on how to install software locally. Beyond what you would expect a formula to have, like a version, server location of the package, os specific rules, formulas also depend on a *strategy*.
-A *strategy* defines how you should fetch your package. This is where your newly acquired knowledge of how to handle *OCI Spec* comes in handy. You now possess the tools to be able to create a `brew` strategy that is able to leverage the *OCI* compliant APIs to install your software packages.
+You probably see where this is going! With the work we have previously done, we can now define `brew` *formulas* and a *strategy* to be able to leverage *OCI* compliant artifact servers to host your software packages a use `brew` to install those artifacts.
  
+## Conclusion
 
+We have seen a bit of the backstory of *OCI*. We have scratched the surface on how to work with *OCI Spec* compliant registries, mainly through the use of it's APIs. And finally we have touched briefly on examples of existing tools that allows us to work with these registries and perharps even integrate them with other existing tools. In summary we have seen the capabilities/features that containers images distribution provides and how we can transport them into other 
 
 ## References
 - https://www.pluralsight.com/resources/blog/cloud/history-of-container-technology
