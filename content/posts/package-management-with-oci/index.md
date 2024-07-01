@@ -298,7 +298,7 @@ You probably see where this is going! With the work we have previously done, we 
  
 ## Conclusion
 
-We have seen a bit of the backstory of *OCI*. We have scratched the surface on how to work with *OCI Spec* compliant registries, mainly through the use of it's APIs. And finally we have touched briefly on examples of existing tools that allows us to work with these registries and perharps even integrate them with other existing tools. In summary we have seen the capabilities/features that containers images distribution provides and how we can transport them into other 
+We have explored the backstory of the OCI and delved into how to work with OCI Spec compliant registries, mainly through the use of their APIs. Additionally, we have touched briefly on existing tools that facilitate interaction with these registries and even enable integration with other tools. In summary, we have seen the capabilities that container image distribution (and its more general specification) provides and how we can apply these capabilities and concepts to other types of artifacts and workflows. The OCI Spec is flexible enough for a wide range of projects to leverage, and since it is the core of packaging and distribution for a significant part of our industry, we will undoubtedly see its growth and adoption spread to even more tools and projects.
 
 ## References
 - https://www.pluralsight.com/resources/blog/cloud/history-of-container-technology
